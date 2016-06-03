@@ -1,0 +1,6 @@
+## ignore folder
+/bin/
+
+## ignore files
+*.classpath
+*.project
