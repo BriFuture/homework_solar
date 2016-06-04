@@ -4,27 +4,35 @@ public class Planet {
 	/**
 	 * 质量
 	 */
-	protected double mass;
+	protected double mass = 0;
 	/**
 	 * 半径
 	 */
-	protected double ridus;
+	protected double ridus = 0;
 	/**
 	 * 位置坐标 x
 	 */
-	protected double posX;
+	protected double posX = 0;
 	/**
 	 * 位置坐标 y
 	 */
-	protected double posY;
+	protected double posY = 0;
 	/**
 	 * 位置坐标 z
 	 */
-	protected double posZ;
+	protected double posZ = 0;
+
 	/**
-	 * 速率
+	 * x 方向的速度
 	 */
-	protected double velocity;
+	protected double speedX = 0;
+	/**
+	 * y 方向的速度
+	 */
+	protected double speedY = 0;
+	
+	
+	
 	/**
 	 * @return the mass
 	 */
@@ -85,18 +93,35 @@ public class Planet {
 	public void setPosZ(double posZ) {
 		this.posZ = posZ;
 	}
+
 	/**
-	 * @return the velocity
+	 * @return the speedX
 	 */
-	public double getVelocity() {
-		return velocity;
+	public double getSpeedX() {
+		return speedX;
 	}
+
 	/**
-	 * @param velocity the velocity to set
+	 * @param speedX the speedX to set
 	 */
-	public void setVelocity(double velocity) {
-		this.velocity = velocity;
+	public void setSpeedX(double speedX) {
+		this.speedX = speedX;
 	}
+
+	/**
+	 * @return the speedY
+	 */
+	public double getSpeedY() {
+		return speedY;
+	}
+
+	/**
+	 * @param speedY the speedY to set
+	 */
+	public void setSpeedY(double speedY) {
+		this.speedY = speedY;
+	}
+
 	
 	
 }

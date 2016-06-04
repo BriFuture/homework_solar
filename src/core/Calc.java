@@ -42,4 +42,16 @@ public class Calc {
 		double FGx = -(FG * x /r);
 		return FGx;
 	}
+	
+	/**
+	 * 计算矢量大小
+	 * @param vx  x 分量
+	 * @param vy  y 分量
+	 * @return    合成的矢量大小
+	 */
+	public static double getVec(double vx, double vy) {
+		double v = Math.sqrt(vx * vx + vy * vy);
+		return v;
+	}
+	
 }
