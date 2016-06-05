@@ -13,7 +13,7 @@ public class Example1 extends Example{
 	 */
 	private MyPanel mp;
 	
-	private static final int SIZE = 200;
+	private static final int SIZE = 240;
 	
 	public static void main(String[] args) {
 		Example1 e1 = new Example1();
@@ -25,6 +25,7 @@ public class Example1 extends Example{
 		super();
 		this.mp = new MyPanel();
 		this.getContentPane().add(this.mp);
+		this.setTitle("Expamle 4-1");
 	}
 	/**
 	 * º∆À„
@@ -56,9 +57,9 @@ public class Example1 extends Example{
 			double y;
 			double vx;
 			double vy;
-			double dt = 0.0001;
+			double dt = 0.001;
 			
-			for(int i = 0; i < 10001; i++) {
+			for(int i = 0; i < 100001; i++) {
 				//º∆À„æ‡¿Î
 				r = Calc.distance(sun.getPosX(), sun.getPosY(), earth.getPosX(), earth.getPosY());
 				// ‰≥ˆ

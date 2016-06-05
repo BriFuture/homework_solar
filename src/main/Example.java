@@ -30,8 +30,8 @@ public class Example extends JFrame{
 			g.setColor(Color.BLACK);
 			g.fillOval((int) x, (int) y, 2, 2);
 			//ºá×ÝÖá
-			g.drawLine(-200, 200, 200, 200);
-			g.drawLine(-200, -200, -200, 200);
+			g.drawLine(-240, 240, 240, 240);
+			g.drawLine(-240, -240, -240, 240);
 			
 		}
 	}
