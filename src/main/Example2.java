@@ -32,12 +32,28 @@ public class Example2 {
 		return r;
 	}
 	
+	/**
+	 * 得到行星在椭圆轨道上的最大速度
+	 * @param Ms
+	 * @param Mp
+	 * @param a
+	 * @param e
+	 * @return
+	 */
 	public double getVmax(double Ms, double Mp, double a, double e) {
 		//对应 4.11  公式
 		double Vmax = Math.sqrt(Const.G * Ms * (1 + e) * (1 + Mp / Ms) / a / (1 - e));
 		return Vmax;
 	}
 	
+	/**
+	 * 得到行星在椭圆轨道上的最小速度
+	 * @param Ms
+	 * @param Mp
+	 * @param a
+	 * @param e
+	 * @return
+	 */
 	public double getVmin(double Ms, double Mp, double a, double e) {
 		//对应 4.11  公式
 		double Vmin = Math.sqrt(Const.G * Ms * (1 - e) * (1 + Mp / Ms) / a / (1 + e));
