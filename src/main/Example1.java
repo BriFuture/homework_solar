@@ -77,7 +77,7 @@ public class Example1 extends Example{
 				mp.setPos(earth.getPosX() * SIZE, earth.getPosY() * SIZE);
 				mp.repaint();
 				
-				//对应 example 4.1 上的伪算法
+				//对应 example 4.1 上的伪算法，4.7 的公式
 				//速度变化
 				vx = getViNext(earth.getSpeedX(), earth.getPosX(), r, dt);
 				earth.setSpeedX(vx);
@@ -108,6 +108,9 @@ public class Example1 extends Example{
 			g.translate(400, 280);
 			g.setColor(Color.BLACK);
 			g.fillOval((int) x, (int) y, 2, 2);
+			// 画出中心
+			g.fillOval(0, 0, 15, 15);
+			g.drawString("solar", 8, -8);
 			// 画出坐标系
 			g.drawLine(-240, 240, 240, 240);
 			g.drawLine(-240, -240, -240, 240);
