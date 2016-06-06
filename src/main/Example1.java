@@ -1,7 +1,9 @@
 package main;
 
-
+import java.awt.Color;
 import java.awt.Graphics;
+
+import javax.swing.JPanel;
 
 import core.Calc;
 import objs.Earth;
@@ -28,7 +30,7 @@ public class Example1 extends Example{
 		this.setTitle("Expamle 4-1");
 	}
 	/**
-	 * ¼ÆËã
+	 * è®¡ç®—
 	 */
 	public void calc() {
 		PaintThread pt = new PaintThread();
@@ -45,10 +47,10 @@ public class Example1 extends Example{
 //			sun.setMass(Const.SUN_MASS);
 			
 			Earth earth = new Earth();
-			//¼ÙÉè³õÊ¼Ê±£¬µØÇòÔÚ x ÖáÕı°ëÖáÉÏ£¬¾àÀëÒÔ AU Îªµ¥Î»
+			//å‡è®¾åˆå§‹æ—¶ï¼Œåœ°çƒåœ¨ x è½´æ­£åŠè½´ä¸Šï¼Œè·ç¦»ä»¥ AU ä¸ºå•ä½
 			earth.setPosX(1);
 			earth.setPosY(0);
-			//³õÊ¼ËÙ¶ÈÎª (0, 2 * PI)
+			//åˆå§‹é€Ÿåº¦ä¸º (0, 2 * PI)
 			earth.setSpeedX(0);
 			earth.setSpeedY(2 * Math.PI);
 			
@@ -60,26 +62,28 @@ public class Example1 extends Example{
 			double dt = 0.001;
 			
 			for(int i = 0; i < 100001; i++) {
-				//¼ÆËã¾àÀë
+				//è®¡ç®—è·ç¦»
 				r = Calc.distance(sun.getPosX(), sun.getPosY(), earth.getPosX(), earth.getPosY());
-				//Êä³ö
-				System.out.println("====== µÚ " + i + " ´Î ======");
-				System.out.printf("Î»ÖÃ£º   x: %.4f  ======= y: %.4f" , earth.getPosX(), earth.getPosY());
+				//è¾“å‡º
+				System.out.println("====== ç¬¬ " + i + " æ¬¡ ======");
+				System.out.printf("ä½ç½®ï¼š   x: %.4f  ======= y: %.4f" , earth.getPosX(), earth.getPosY());
 				System.out.println();
-				System.out.printf("ËÙ¶È£º   x: %.4f  ======= y: %.4f" , earth.getSpeedX(), earth.getSpeedY());
+				System.out.printf("é€Ÿåº¦ï¼š   x: %.4f  ======= y: %.4f" , earth.getSpeedX(), earth.getSpeedY());
 				System.out.println();
-				System.out.printf("¾àÀë£º   r: %.6f", r);
+				System.out.printf("è·ç¦»ï¼š   r: %.6f", r);
 				System.out.println();
 				System.out.println();
-				//»æÍ¼
+				//ç»˜å›¾
 				mp.setPos(earth.getPosX() * SIZE, earth.getPosY() * SIZE);
-				mp.repaint();;
-				//ËÙ¶È±ä»¯
+				mp.repaint();
+				
+				//å¯¹åº” example 4.1 ä¸Šçš„ä¼ªç®—æ³•
+				//é€Ÿåº¦å˜åŒ–
 				vx = getViNext(earth.getSpeedX(), earth.getPosX(), r, dt);
 				earth.setSpeedX(vx);
 				vy = getViNext(earth.getSpeedY(), earth.getPosY(), r, dt);
 				earth.setSpeedY(vy);
-				//Î»ÖÃ±ä»¯
+				//ä½ç½®å˜åŒ–
 				x = getNextPos(earth.getPosX(), earth.getSpeedX(), dt);
 				earth.setPosX(x);
 				y = getNextPos(earth.getPosY(), earth.getSpeedY(), dt);
@@ -90,13 +94,34 @@ public class Example1 extends Example{
 		
 	}
 	
+	protected class MyPanel extends JPanel{
+		double x = 0;
+		double y = 0;
+		
+		public void setPos(double x, double y) {
+			this.x = x;
+			this.y = y;
+		}
+		
+		public void paint(Graphics g) {
+//			super.paint(g);
+			g.translate(400, 280);
+			g.setColor(Color.BLACK);
+			g.fillOval((int) x, (int) y, 2, 2);
+			// ç”»å‡ºåæ ‡ç³»
+			g.drawLine(-240, 240, 240, 240);
+			g.drawLine(-240, -240, -240, 240);
+			
+		}
+	}
+	
 	/**
 	 * 
-	 * @param vi µÚ i ´ÎµÄËÙ¶È·ÖÁ¿
-	 * @param pi µÚ i ´Î×ø±ê·ÖÁ¿
-	 * @param ri µÚ i ´Î¾àÀë
-	 * @param dt Ê±¼ä¼ä¸ô
-	 * @return   µÚ i+1 ´ÎµÄËÙ¶È·ÖÁ¿
+	 * @param vi ç¬¬ i æ¬¡çš„é€Ÿåº¦åˆ†é‡
+	 * @param pi ç¬¬ i æ¬¡åæ ‡åˆ†é‡
+	 * @param ri ç¬¬ i æ¬¡è·ç¦»
+	 * @param dt æ—¶é—´é—´éš”
+	 * @return   ç¬¬ i+1 æ¬¡çš„é€Ÿåº¦åˆ†é‡
 	 */
 	public double getViNext(double vi, double pi, double ri, double dt) {
 		double vin = vi - 4 * Math.PI * Math.PI* pi * dt / Math.pow(ri, 3);
@@ -105,10 +130,10 @@ public class Example1 extends Example{
 	
 	/**
 	 * 
-	 * @param pi  µÚ i ´Î×ø±ê·ÖÁ¿ 
-	 * @param vin µÚ i+1 ´ÎµÄËÙ¶È·ÖÁ¿
-	 * @param dt  Ê±¼ä¼ä¸ô
-	 * @return    µÚ i+1 ´ÎµÄ×ø±ê·ÖÁ¿
+	 * @param pi  ç¬¬ i æ¬¡åæ ‡åˆ†é‡ 
+	 * @param vin ç¬¬ i+1 æ¬¡çš„é€Ÿåº¦åˆ†é‡
+	 * @param dt  æ—¶é—´é—´éš”
+	 * @return    ç¬¬ i+1 æ¬¡çš„åæ ‡åˆ†é‡
 	 */
 	public double getNextPos(double pi, double vin, double dt) {
 		double pni = pi + vin * dt;

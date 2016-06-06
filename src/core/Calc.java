@@ -1,14 +1,19 @@
 package core;
 
+/**
+ * è®¡ç®—æœ€å¸¸ç”¨çš„å…¬å¼çš„ç»“æœ
+ * @author future
+ *
+ */
 public class Calc {
 	
 	/**
-	 * ¼ÆËãÁ½µãÖ®¼äµÄ¾àÀë
+	 * è®¡ç®—ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»
 	 * @param x1
 	 * @param y1
 	 * @param x2
 	 * @param y2
-	 * @return Á½µãÖ®¼äµÄ¾àÀë
+	 * @return ä¸¤ç‚¹ä¹‹é—´çš„è·ç¦»
 	 */
 	public static double distance(double x1, double y1, double x2, double y2) {
 		double x = Math.abs(x1 - x2);
@@ -18,11 +23,11 @@ public class Calc {
 	}
 	
 	/**
-	 * ¼ÆËãÍòÓĞÒıÁ¦
-	 * @param M1 ĞĞĞÇ 1 µÄÖÊÁ¿
-	 * @param M2 ĞĞĞÇ 2 µÄÖÊÁ¿
-	 * @param r Á½¸öĞĞĞÇÖ®¼äµÄ¾àÀë
-	 * @return ÍòÓĞÒıÁ¦
+	 * è®¡ç®—ä¸‡æœ‰å¼•åŠ›
+	 * @param M1 è¡Œæ˜Ÿ 1 çš„è´¨é‡
+	 * @param M2 è¡Œæ˜Ÿ 2 çš„è´¨é‡
+	 * @param r ä¸¤ä¸ªè¡Œæ˜Ÿä¹‹é—´çš„è·ç¦»
+	 * @return ä¸‡æœ‰å¼•åŠ›
 	 */
 	public static double getGravity(double M1, double M2, double r) {
 		double FG = Const.G * M1 * M2 / (r *r);
@@ -30,11 +35,11 @@ public class Calc {
 	}
 	
 	/**
-	 * ÍòÓĞÒıÁ¦ÔÚÄ³¸ö×ø±êÖáÉÏµÄ·ÖÁ¿
-	 * @param M1  ĞĞĞÇ 1 µÄÖÊÁ¿
-	 * @param M2  ĞĞĞÇ 2 µÄÖÊÁ¿
-	 * @param r  ¾àÀë
-	 * @param x  µ±½«ÆäÖĞÒ»¸öĞĞĞÇ£¨ÖÊÁ¿½Ï´óµÄÄÇ¸ö£©µÄÎ»ÖÃ×÷ÎªÔ­µã£¬ÁíÍâÒ»¸öĞĞĞÇÔÚÄ³¸ö×ø±êÖáµÄ ×ø±ê
+	 * ä¸‡æœ‰å¼•åŠ›åœ¨æŸä¸ªåæ ‡è½´ä¸Šçš„åˆ†é‡
+	 * @param M1  è¡Œæ˜Ÿ 1 çš„è´¨é‡
+	 * @param M2  è¡Œæ˜Ÿ 2 çš„è´¨é‡
+	 * @param r  è·ç¦»
+	 * @param x  å½“å°†å…¶ä¸­ä¸€ä¸ªè¡Œæ˜Ÿï¼ˆè´¨é‡è¾ƒå¤§çš„é‚£ä¸ªï¼‰çš„ä½ç½®ä½œä¸ºåŸç‚¹ï¼Œå¦å¤–ä¸€ä¸ªè¡Œæ˜Ÿåœ¨æŸä¸ªåæ ‡è½´çš„ åæ ‡
 	 * @return
 	 */
 	public static double getGravityInX(double M1, double M2, double r, double x) {
@@ -44,14 +49,34 @@ public class Calc {
 	}
 	
 	/**
-	 * ¼ÆËãÊ¸Á¿´óĞ¡
-	 * @param vx  x ·ÖÁ¿
-	 * @param vy  y ·ÖÁ¿
-	 * @return    ºÏ³ÉµÄÊ¸Á¿´óĞ¡
+	 * è®¡ç®—çŸ¢é‡å¤§å°
+	 * @param vx  x åˆ†é‡
+	 * @param vy  y åˆ†é‡
+	 * @return    åˆæˆçš„çŸ¢é‡å¤§å°
 	 */
 	public static double getVec(double vx, double vy) {
 		double v = Math.sqrt(vx * vx + vy * vy);
 		return v;
+	}
+	
+	/**
+	 * è®¡ç®—å¼€æ™®å‹’ç¬¬ä¸‰å®šå¾‹ï¼Œ T<sup>2</sup>/a <sup>3</sup>
+	 * @param  T  å‘¨æœŸ
+	 * @param  a  åŠé•¿è½´
+	 * @return
+	 */
+	public static double calcKepler3(double T, double a) {
+		return T * T / Math.pow(a, 3);
+	}
+	
+	/**
+	 * è®¡ç®—çº¦åŒ–è´¨é‡
+	 * @param m1
+	 * @param m2
+	 * @return
+	 */
+	public static double calcReducedMass(double m1, double m2) {
+		return m1 * m2 / ( m1 + m2 );
 	}
 	
 }

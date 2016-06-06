@@ -2,32 +2,32 @@ package objs;
 
 public class Planet {
 	/**
-	 * 质量
+	 * 璐ㄩ噺
 	 */
 	protected double mass = 0;
 	/**
-	 * 半径
+	 * 鏄熺悆鍗婂緞
 	 */
 	protected double ridus = 0;
 	/**
-	 * 位置坐标 x
+	 * 鍧愭爣 x
 	 */
 	protected double posX = 0;
 	/**
-	 * 位置坐标 y
+	 * 鍧愭爣 y
 	 */
 	protected double posY = 0;
 	/**
-	 * 位置坐标 z
+	 * 鍧愭爣 z
 	 */
 	protected double posZ = 0;
 
 	/**
-	 * x 方向的速度
+	 * x 鏂瑰悜鐨勯�熷害
 	 */
 	protected double speedX = 0;
 	/**
-	 * y 方向的速度
+	 * y 鏂瑰悜鐨勯�熷害
 	 */
 	protected double speedY = 0;
 	

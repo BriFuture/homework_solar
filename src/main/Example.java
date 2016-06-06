@@ -8,33 +8,14 @@ import javax.swing.JPanel;
 
 public class Example extends JFrame{
 	public Example() {
-		this.setSize(800, 600);// ÉèÖÃ´°ÌåµÄ´óĞ¡
-		this.setLocation(300, 50);// ÉèÖÃ´°ÌåµÄ³õÊ¼Î»ÖÃ
+		this.setSize(800, 600);// è®¾ç½®çª—ä½“çš„å¤§å°
+		this.setLocation(300, 50);// è®¾ç½®çª—ä½“çš„ä½ç½®
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setResizable(false);
 	}
 	
-	protected class MyPanel extends JPanel{
-		double x = 0;
-		double y = 0;
-		
-		public void setPos(double x, double y) {
-			this.x = x;
-			this.y = y;
-		}
-		
-		public void paint(Graphics g) {
-//			super.paint(g);
-			g.translate(400, 280);
-			g.setColor(Color.BLACK);
-			g.fillOval((int) x, (int) y, 2, 2);
-			//ºá×İÖá
-			g.drawLine(-240, 240, 240, 240);
-			g.drawLine(-240, -240, -240, 240);
-			
-		}
-	}
+
 	
 
 }

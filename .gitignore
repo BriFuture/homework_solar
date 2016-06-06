@@ -1,6 +1,6 @@
 ## ignore folder
 /bin/
-
+.settings/
 ## ignore files
 *.classpath
 *.project

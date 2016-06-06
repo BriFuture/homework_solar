@@ -6,16 +6,16 @@ public class Const {
 	public static final int AXIS_Y = 2;
 	
 	/**
-	 * Êµ¼ÊµÄÌ«ÑôÖÊÁ¿
+	 * å®é™…çš„å¤ªé˜³è´¨é‡
 	 */
 	public static final double SUN_MASS = 2 * Math.pow(10, 30);
 	/**
-	 * Êµ¼ÊµÄµØÇòÖÊÁ¿
+	 * å®é™…çš„åœ°çƒè´¨é‡
 	 */
 	public static final double EARTH_MASS = 6 * Math.pow(10, 24);
 
 	/**
-	 * ÒıÁ¦³£Êı 6.67259¡Á10^-11
+	 * å¼•åŠ›å¸¸æ•° 6.67259Ã—10^-11
 	 */
 	public static final double G = 6.67259 * Math.pow(10, -11);
 }
