@@ -49,6 +49,19 @@ public class Calc {
 	}
 	
 	/**
+	 * 修正万有引力中距离的幂
+	 * @param Ms
+	 * @param Me
+	 * @param r
+	 * @param beta
+	 * @return
+	 */
+	public static double modGravity(double Ms, double Me, double r, double beta) {
+		double FG = Const.G * Ms * Me / Math.pow(r, beta);
+		return FG;
+	}
+	
+	/**
 	 * 计算矢量大小
 	 * @param vx  x 分量
 	 * @param vy  y 分量

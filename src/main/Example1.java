@@ -15,17 +15,28 @@ public class Example1 extends Example{
 	 */
 	private MyPanel mp;
 	
+	/**
+	 * 时间间隔
+	 */
+	private double dt;
+	private double velocity;
+	
 	private static final int SIZE = 240;
 	
 	public static void main(String[] args) {
-		Example1 e1 = new Example1();
+		double timestep = 0.002;
+		double velocity = 2 * Math.PI;
+		
+		Example1 e1 = new Example1(timestep, velocity);
 		e1.calc();
 		
 	}
-	
-	public Example1() {
+
+	public Example1(double timestep, double velocity) {
 		super();
-		this.mp = new MyPanel();
+		this.mp 	  = new MyPanel();
+		this.dt 	  = timestep;
+		this.velocity = velocity;
 		this.getContentPane().add(this.mp);
 		this.setTitle("Expamle 4-1");
 	}
@@ -37,7 +48,7 @@ public class Example1 extends Example{
 		new Thread(pt).start();
 	}
 	
-	protected class PaintThread implements Runnable {
+	private class PaintThread implements Runnable {
 
 		@Override
 		public void run() {
@@ -50,18 +61,19 @@ public class Example1 extends Example{
 			//假设初始时，地球在 x 轴正半轴上，距离以 AU 为单位
 			earth.setPosX(1);
 			earth.setPosY(0);
-			//初始速度为 (0, 2 * PI)
+			//初始速度
 			earth.setSpeedX(0);
-			earth.setSpeedY(2 * Math.PI);
+			earth.setSpeedY(velocity);
 			
 			double r;
 			double x;
 			double y;
 			double vx;
 			double vy;
-			double dt = 0.001;
 			
-			for(int i = 0; i < 100001; i++) {
+			int i = 0;
+			// 至少循环一圈
+			while(i < 1 / dt || i < 1000) {
 				//计算距离
 				r = Calc.distance(sun.getPosX(), sun.getPosY(), earth.getPosX(), earth.getPosY());
 				//输出
@@ -76,7 +88,12 @@ public class Example1 extends Example{
 				//绘图
 				mp.setPos(earth.getPosX() * SIZE, earth.getPosY() * SIZE);
 				mp.repaint();
-				
+				try {
+					Thread.sleep(10);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				//对应 example 4.1 上的伪算法，4.7 的公式
 				//速度变化
 				vx = getViNext(earth.getSpeedX(), earth.getPosX(), r, dt);
@@ -87,7 +104,8 @@ public class Example1 extends Example{
 				x = getNextPos(earth.getPosX(), earth.getSpeedX(), dt);
 				earth.setPosX(x);
 				y = getNextPos(earth.getPosY(), earth.getSpeedY(), dt);
-				earth.setPosY(y);		
+				earth.setPosY(y);
+				i++;
 			}
 
 		}
@@ -104,10 +122,13 @@ public class Example1 extends Example{
 		}
 		
 		public void paint(Graphics g) {
-//			super.paint(g);
+			g.drawString("timestep = " + dt + "  yr", 15, 15);
+			g.drawString("velocity    = " + velocity/ Math.PI + " π AU/yr", 15, 30);
+			
 			g.translate(400, 280);
 			g.setColor(Color.BLACK);
-			g.fillOval((int) x, (int) y, 2, 2);
+			g.fillOval((int) x, (int) y, 3, 3);
+			
 			// 画出中心
 			g.fillOval(0, 0, 15, 15);
 			g.drawString("solar", 8, -8);
@@ -119,7 +140,7 @@ public class Example1 extends Example{
 	}
 	
 	/**
-	 * 
+	 * 使用 Euler-Cromer 法则计算下一次的速度分量
 	 * @param vi 第 i 次的速度分量
 	 * @param pi 第 i 次坐标分量
 	 * @param ri 第 i 次距离
@@ -132,7 +153,7 @@ public class Example1 extends Example{
 	}
 	
 	/**
-	 * 
+	 * 使用 Euler-Cromer 法则计算下一次的位置
 	 * @param pi  第 i 次坐标分量 
 	 * @param vin 第 i+1 次的速度分量
 	 * @param dt  时间间隔
