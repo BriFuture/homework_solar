@@ -1,6 +1,6 @@
 package test;
 
-import objs.Sun;
+import core.Sun;
 
 public class TestPlanet {
 

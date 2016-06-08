@@ -8,8 +8,8 @@ import java.util.Iterator;
 import javax.swing.JPanel;
 
 import core.Calc;
-import objs.Earth;
-import objs.Sun;
+import core.Earth;
+import core.Sun;
 import utils.FileUtil;
 
 /**

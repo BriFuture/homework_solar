@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import core.Calc;
+import core.Earth;
 import core.Point;
-import objs.Earth;
-import objs.Sun;
+import core.Sun;
 
 /**
  * 验证 KEPLER 定律
@@ -51,11 +51,11 @@ public class Example2 extends Example{
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Example2 e3 = new Example2();
-		e3.calc();
+		Example2 e2 = new Example2();
+		e2.start();
 	}
 	
-	public void calc() {
+	public void start() {
 		this.mp = new MyPanel();
 		this.getContentPane().add(this.mp);
 		this.setTitle("Expamle 4-3");
@@ -64,9 +64,9 @@ public class Example2 extends Example{
 		this.velocity = 2 * Math.PI;
 		
 		start1 = 50;
-		stop1  = 150;
-		start2 = 200;
-		stop2  = 300;
+		stop1  = 200;
+		start2 = 300;
+		stop2  = 450;
 		
 		new Thread(new PaintThread()).start();
 	}
@@ -151,7 +151,6 @@ public class Example2 extends Example{
 				paintArea(g);
 			}
 		}
-		
 	}
 	
 	/**
@@ -224,29 +223,17 @@ public class Example2 extends Example{
 				al.add(array.get(i));
 			}
 			int[] res = calcMaxMin(al);
-			System.out.println("red yM: " + res[1] + "  ym: " + res[3]);
-			System.out.println("red xM: " + res[0] + "  xm: " + res[2]);
+//			System.out.println("red yM: " + res[1] + "  ym: " + res[3]);
+//			System.out.println("red xM: " + res[0] + "  xm: " + res[2]);
 			
 			g.setColor(array.get(start1 + 1).getColor());
 			// 计算扫过的区域
-//			for(int i = -SIZE - 10; i <= SIZE + 10; i++) {
-//				for(int j = -SIZE - 10; j <= SIZE + 10; j++) {
-//					int podis = (int) Calc.distance(0, 0, i, j);
-//					int x =(int) (SIZE * i / (podis == 0 ? 1 : podis));
-//					int y =(int) (SIZE * j / (podis == 0 ? 1 : podis));
-//					
-//					if((x >= res[2] && x <= res[0]) && (y >= res[3] && y <= res[1]) && podis <= SIZE) {
-//						g.fillRect(i, j, 1, 1);
-//						area1++;
-//					}
-//					
-//				}
-//			}
-			for(int i = -50; i <= 240; i++) {
-				for(int j = 0; j <= 240; j++) {
+			for(int i = -SIZE - 10; i <= SIZE + 10; i++) {
+				for(int j = -SIZE - 10; j <= SIZE + 10; j++) {
 					int podis = (int) Calc.distance(0, 0, i, j);
 					int x =(int) (SIZE * i / (podis == 0 ? 1 : podis));
-					int y =(int) (SIZE * j / (podis == 0 ? 1 : podis));
+					//由于 Y 轴最大值 238， 最小值 -241 ，所以加上一个 -1.5 的偏移
+					int y =(int) (SIZE * j / (podis == 0 ? 1 : podis) - 1.5) ;
 					
 					if((x >= res[2] && x <= res[0]) && (y >= res[3] && y <= res[1]) && podis <= SIZE) {
 						g.fillRect(i, j, 1, 1);
@@ -257,7 +244,7 @@ public class Example2 extends Example{
 			}
 		}
 		//计算蓝色面积并绘制
-		if(stop2  < array.size() && false) {
+		if(stop2  < array.size()) {
 			area2 = 0;
 			g.setColor(array.get(start2 + 1).getColor());
 			//如果stop可以绘制出的话，开始计算围线所包围的面积
@@ -269,14 +256,11 @@ public class Example2 extends Example{
 			System.out.println("blue yM: " + res[1] + "  ym: " + res[3]);
 			System.out.println("blue xM: " + res[0] + "  xm: " + res[2]);
 			// 计算扫过的区域
-			for(int i = -300; i <= 300; i++) {
-				for(int j = -300; j <= 300; j++) {
-					if(i == 0 && j == 0) {
-						continue;
-					}
+			for(int i = -SIZE - 10; i <= SIZE + 10; i++) {
+				for(int j = -SIZE - 10; j <= SIZE + 10; j++) {
 					int podis = (int) Calc.distance(0, 0, i, j);
-					int x =(int) (SIZE * i / podis);
-					int y =(int) (SIZE * j / podis);
+					int x =(int) (SIZE * i / (podis == 0 ? 1 : podis));
+					int y =(int) (SIZE * j / (podis == 0 ? 1 : podis) - 1.5) ;
 					if((x >= res[2] && x <= res[0]) && (y >= res[3] && y <= res[1]) && podis <= SIZE) {
 						g.drawRect(i, j, 1, 1);
 						area2++;

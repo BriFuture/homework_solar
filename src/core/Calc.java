@@ -23,30 +23,50 @@ public class Calc {
 	}
 	
 	/**
-	 * 计算万有引力
+	 * 计算万有引力(矢量), 从 1 指向 2
 	 * @param M1 行星 1 的质量
 	 * @param M2 行星 2 的质量
-	 * @param r 两个行星之间的距离
-	 * @return 万有引力
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return 
 	 */
-	public static double getGravity(double M1, double M2, double r) {
-		double FG = Const.G * M1 * M2 / (r *r);
-		return FG;
+	public static MyVector getGravity(double M1, double M2, double x1, double y1, double x2, double y2) {
+		double r = distance(x1, y1, x2, y2);
+		double FG = Const.G * M1 * M2 / (r * r);
+//		System.out.println("质量M1=" + M1);
+//		System.out.println("质量M2=" + M2);
+//		System.out.println("FG=" + FG);
+		
+		MyVector mv = new MyVector();
+		mv.setLength(FG);
+		Point direct = new Point(x1 - x2, y1 - y2);
+		mv.setDirect(direct);
+//		return FG;
+		return mv;
 	}
-	
+
 	/**
-	 * 万有引力在某个坐标轴上的分量
-	 * @param M1  行星 1 的质量
-	 * @param M2  行星 2 的质量
-	 * @param r  距离
-	 * @param x  当将其中一个行星（质量较大的那个）的位置作为原点，另外一个行星在某个坐标轴的 坐标
+	 * 计算万有引力的大小
+	 * @param M1
+	 * @param M2
+	 * @param r
 	 * @return
 	 */
-	public static double getGravityInX(double M1, double M2, double r, double x) {
-		double FG = getGravity(M1, M2, r);
-		double FGx = -(FG * x /r);
-		return FGx;
+	public static double calcGravity(double M1, double M2, double r) {
+		double FG = Const.G * M1 * M2 / (r * r);
+		return FG;
 	}
+
+	public static MyVector getAcce(MyVector F, double M) {
+		MyVector mv = new MyVector();
+		mv.setLength(F.getLength() / M);
+		mv.setDirect(F.getDirect());
+		return mv;
+	}
+	
+	
 	
 	/**
 	 * 修正万有引力中距离的幂

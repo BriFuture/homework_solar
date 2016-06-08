@@ -2,6 +2,11 @@ package core;
 
 import java.awt.Color;
 
+/**
+ * 描特定的点，可以当作矢量
+ * @author future
+ *
+ */
 public class Point {
 	private double x;
 	private double y;
@@ -12,6 +17,12 @@ public class Point {
 		this.x = x;
 		this.y = y;
 		this.color = color;
+	}
+	
+	public Point(double x, double y) {
+		super();
+		this.x = x;
+		this.y = y;
 	}
 
 	/**
