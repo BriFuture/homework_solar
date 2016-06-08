@@ -31,6 +31,7 @@ public class Planet {
 	 */
 	protected double speedY = 0;
 	
+	protected String name;
 	
 	
 	/**
@@ -120,6 +121,18 @@ public class Planet {
 	 */
 	public void setSpeedY(double speedY) {
 		this.speedY = speedY;
+	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	

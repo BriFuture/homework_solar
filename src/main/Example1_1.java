@@ -12,7 +12,12 @@ import objs.Earth;
 import objs.Sun;
 import utils.FileUtil;
 
-public class Example1 extends Example{
+/**
+ *  Example1 绘图的修正
+ * @author future
+ *
+ */
+public class Example1_1 extends Example{
 	/**
 	 * Graphics of panel
 	 */
@@ -37,7 +42,7 @@ public class Example1 extends Example{
 		double timestep = 0.002;
 		double velocity = 2 * Math.PI;
 		
-		Example1 e1 = new Example1(timestep, velocity);
+		Example1_1 e1 = new Example1_1(timestep, velocity);
 		e1.setMinPoints(3000);
 		e1.calc();
 		
@@ -60,7 +65,7 @@ public class Example1 extends Example{
 	}
 
 
-	public Example1(double timestep, double velocity) {
+	public Example1_1(double timestep, double velocity) {
 		super();
 		this.mp 	  = new MyPanel();
 		this.dt 	  = timestep;

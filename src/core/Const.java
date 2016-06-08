@@ -1,5 +1,10 @@
 package core;
 
+/**
+ * 常量
+ * @author future
+ *
+ */
 public class Const {
 
 	public static final int AXIS_X = 1;

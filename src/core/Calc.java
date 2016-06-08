@@ -1,7 +1,7 @@
 package core;
 
 /**
- * 计算最常用的公式的结果
+ * 计算常用的公式的结果
  * @author future
  *
  */
@@ -92,4 +92,74 @@ public class Calc {
 		return m1 * m2 / ( m1 + m2 );
 	}
 	
+	/**
+	 * 使用 Euler-Cromer 法则计算下一次的速度分量
+	 * @param vi 第 i 次的速度分量
+	 * @param pi 第 i 次坐标分量
+	 * @param ri 第 i 次距离
+	 * @param dt 时间间隔
+	 * @return   第 i+1 次的速度分量
+	 */
+	public static double getNextVi(double vi, double pi, double ri, double dt) {
+		double vin = vi - 4 * Math.PI * Math.PI* pi * dt / Math.pow(ri, 3);
+		return vin;
+	}
+	
+	/**
+	 * 使用 Euler-Cromer 法则计算下一次的位置
+	 * @param pi  第 i 次坐标分量 
+	 * @param vin 第 i+1 次的速度分量
+	 * @param dt  时间间隔
+	 * @return    第 i+1 次的坐标分量
+	 */
+	public static double getNextPos(double pi, double vin, double dt) {
+		double pni = pi + vin * dt;
+		return pni;
+	}
+	
+	/**
+	 * 计算半径，假定 theta0 = 0
+	 * @param Ms
+	 * @param Mp
+	 * @param theta
+	 * @param L
+	 * @param e
+	 * @return
+	 */
+	public static double getRadius(double Ms, double Mp, double theta, double L, double e) {
+		double u = Calc.calcReducedMass(Ms, Mp);
+//		double L = u * r * r * theta;
+		// 对应 4.10 公式
+		double r = (L * L / (u * Const.G * Ms * Mp)) / (1 - e * Math.cos(theta));
+		
+		return r;
+	}
+	
+	/**
+	 * 得到行星在椭圆轨道上的最大速度
+	 * @param Ms
+	 * @param Mp
+	 * @param a
+	 * @param e
+	 * @return
+	 */
+	public static double getVmax(double Ms, double Mp, double a, double e) {
+		//对应 4.11  公式
+		double Vmax = Math.sqrt(Const.G * Ms * (1 + e) * (1 + Mp / Ms) / a / (1 - e));
+		return Vmax;
+	}
+	
+	/**
+	 * 得到行星在椭圆轨道上的最小速度
+	 * @param Ms
+	 * @param Mp
+	 * @param a
+	 * @param e
+	 * @return
+	 */
+	public static double getVmin(double Ms, double Mp, double a, double e) {
+		//对应 4.11  公式
+		double Vmin = Math.sqrt(Const.G * Ms * (1 - e) * (1 + Mp / Ms) / a / (1 + e));
+		return Vmin;
+	}
 }
