@@ -15,8 +15,7 @@ public class VecPlanet extends Planet{
 	 * @param dt  时间间隔
 	 */
 	public void nextV(MyVector a, double dt) {
-		
-		this.v.add(a.multi(dt));
+		this.v = this.v.add(a.multi(dt));
 	}
 	
 	/**
@@ -24,8 +23,10 @@ public class VecPlanet extends Planet{
 	 * @param dt
 	 */
 	public void nextPos(double dt) {
-//		System.out.println("v1: "+v.getLength());
-		this.pos.add(this.v.multi(dt));
+		MyVector v1 = v.multi(dt);
+//		System.out.println("v1: " + v1.getLength() + " === " + v1.getDirect().getX() + " === " + v1.getDirect().getY());
+		pos = pos.add(v1);
+//		System.out.println("in nextPos: " + pos.getLength() + " === " + pos.getDirect().getX() + " === " + pos.getDirect().getY());
 	}
 	
 	/**
@@ -56,6 +57,7 @@ public class VecPlanet extends Planet{
 
 
 	/**
+	 * 位置矢量
 	 * @return the pos
 	 */
 	public MyVector getPos() {

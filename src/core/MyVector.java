@@ -2,13 +2,13 @@ package core;
 
 public class MyVector {
 	private double length;
-	private Point direct;
+	private Point direct = new Point(0, 0);
 	
 	/**
 	 * 向量相加
 	 * @param mv
 	 */
-	public void add(MyVector mv) {
+	public MyVector add(MyVector mv) {
 		double l1 = Calc.getVec(direct.getX(), direct.getY());
 		double xl;
 		double yl;
@@ -20,8 +20,7 @@ public class MyVector {
 			xl = 0;
 			yl = 0;
 		}
-//		System.out.println("xl: "+xl);
-//		System.out.println("yl: "+yl);
+//		System.out.println("l1: " + l1 + " === xl: " + xl + " ===yl: " + yl);
 //		System.out.println();
 		double l2 = Calc.getVec(mv.direct.getX(), mv.direct.getY());
 		double xl2;
@@ -33,17 +32,24 @@ public class MyVector {
 			xl2 = 0;
 			yl2 = 0;
 		}
-//		System.out.println("xl2: "+xl2);
-//		System.out.println("yl2: "+yl2);
+//		System.out.println("l2: " + l2 + " === xl2: " + xl2 + " ===yl2: " + yl2);
 //		System.out.println();
 		xl += xl2;
 		yl += yl2;
-		double dx = direct.getX() + mv.direct.getX();
-		double dy = direct.getY() + mv.direct.getY();
+		double l3 = Calc.getVec(xl, yl);
 		
-		direct.setX(dx);
-		direct.setY(dy);
-		length = Calc.getVec(xl, yl);
+		MyVector v1 = new MyVector();
+		if(l3 != 0) {
+			v1.direct.setX(xl / l3);
+			v1.direct.setY(yl / l3);
+		} else {
+			v1.direct.setX(0);
+			v1.direct.setY(0);
+		}
+//		System.out.println("=====l3: " + l3 + " === dx: " + v1.getDirect().getX() + " ===dy: " + v1.getDirect().getY());
+//		System.out.println();
+		v1.length = Calc.getVec(xl, yl);
+		return v1;
 	}
 	
 	/**
@@ -57,6 +63,7 @@ public class MyVector {
 		mv.setLength(l);
 		return mv;
 	}
+	
 	/**
 	 * @return the length
 	 */
@@ -79,7 +86,14 @@ public class MyVector {
 	 * @param direct the direct to set
 	 */
 	public void setDirect(Point direct) {
-		this.direct = direct;
+		//归一化
+		double l = Calc.getVec(direct.getX(), direct.getY());
+		if(l != 0) {
+			Point d = new Point(direct.getX() / l, direct.getY() / l);
+			this.direct = d;
+		} else {
+			this.direct = direct;
+		}
 	}
 	
 }

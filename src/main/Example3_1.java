@@ -1,9 +1,15 @@
 package main;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import core.Calc;
 import core.Const;
@@ -12,14 +18,25 @@ import core.MyVector;
 import core.Point;
 import core.Sun;
 
-public class Example3 extends Example{
+/**
+ * 改进 example 3
+ * @author future
+ *
+ */
+public class Example3_1 extends Example{
 
 	private double dt = 0;
 	private static final int SIZE = 240;
-	private static final int UNIT = 50;
+	private static final int UNIT = 240;
 	private Sun sun;
 	private Earth earth;
 	private double r = 0;
+	private ArrayList<Point> trace = new ArrayList<Point>();
+	
+	private JButton control = new JButton("开始");
+	private JTextField vtext = new JTextField(10);
+	private boolean signal = false;
+	
 	/**
 	 * Graphics of panel
 	 */
@@ -27,13 +44,13 @@ public class Example3 extends Example{
 
 	
 	public void start() {
-		dt  = 0.000001;
-		
+		initUI();
+		dt  = 0.00005;
 		sun = new Sun();
 		//设置太阳的速度
 		MyVector mvs = new MyVector();
-		mvs.setDirect(new Point(0, 0));
-		mvs.setLength(0);
+		mvs.setDirect(new Point(0, -1));
+		mvs.setLength(Math.sqrt(Const.G));
 		sun.setV(mvs);
 		//设置位置
 		MyVector mvps = new MyVector();
@@ -58,46 +75,50 @@ public class Example3 extends Example{
 //		earth.setMass(sun.getMass() * Math.pow(10, -6));
 //		earth.setMass(Const.EARTH_MASS / Const.AU);
 
-		mp = new MyPanel();
-		this.getContentPane().add(mp);
-		new Thread(new PaintThread()).start();
+		
 	}
 	
 	private class PaintThread implements Runnable {
 
 		@Override
 		public void run() {
-			int i = 0;
-			try {
-				Thread.sleep(12000);
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-			while( i < 200) {
+			System.out.println("earth pos : " + earth.getVecPosX() + " === " + earth.getVecPosY());
+			System.out.println("earth v : " + earth.getVX() + " === " + earth.getVY());
+			System.out.println();
+
+			while(signal) {
 //				System.out.println("earth  ==== x: " + earth.getVecPosX() + "   y: " + earth.getVecPosY());
 //				System.out.println("earth VV  ==== x: " + earth.getVX() + "   y: " + earth.getVY());
-				System.out.println();
-				i++;
+//				System.out.println();
+
 				r = Calc.distance(sun.getVecPosX(), sun.getVecPosY(), earth.getVecPosX(), earth.getVecPosY());
+//				System.out.println("距离 R = " + r);
 				// 地球的受力
 				MyVector Fe = Calc.getGravity(sun.getMass(), earth.getMass(), sun.getVecPosX(), sun.getVecPosY(), earth.getVecPosX(), earth.getVecPosY());
 				// 太阳的受力
 				MyVector Fs = Calc.getGravity(earth.getMass(), sun.getMass(), earth.getVecPosX(), earth.getVecPosY(), sun.getVecPosX(), sun.getVecPosY());
 				
 				MyVector ae = Calc.getAcce(Fe, earth.getMass());
-//				System.out.println("ae: " + ae.getLength());
+//				System.out.println("ae: " + ae.getLength() +" ==== " + ae.getDirect().getX() + " === " + ae.getDirect().getY());
 				
 				MyVector as = Calc.getAcce(Fs, sun.getMass());
 				//改变速度和位移
 				earth.nextPos(dt);
 				earth.nextV(ae, dt);
+				//添加轨迹
+				trace.add(new Point(earth.getVecPosX(), earth.getVecPosY()));
+//				System.out.println("earth pos next: " + earth.getPos().getLength() + " === " + earth.getVecPosX() + " === " + earth.getVecPosY());
+//				System.out.println("earth v next: " + earth.getV().getLength() + " === " + earth.getVX() + " === " + earth.getVY());
+//				System.out.println();
 				
 				sun.nextPos(dt);
 				sun.nextV(as, dt);
+//				System.out.println("sun pos next: " + sun.getPos().getLength() + " === " + sun.getVecPosX() + " === " + sun.getVecPosY());
+//				System.out.println("sun v next: " + sun.getV().getLength() + " === " + sun.getVX() + " === " + sun.getVY());
+//				System.out.println();
 				
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(3);
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -115,16 +136,57 @@ public class Example3 extends Example{
 		}
 	}
 	
+	public void initUI() {
+//		this.add(control, BorderLayout.EAST);
+		mp = new MyPanel();
+		mp.setLayout(null);
+		mp.add(control);
+		mp.add(vtext);
+		vtext.setText("2");
+		vtext.setBounds(50, 560, 30, 30);;
+		control.setBounds(50, 600, 80, 50);
+		this.getContentPane().add(mp);
+		mp.repaint();
+		this.repaint();
+		this.control.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MyVector mve = new MyVector();
+				mve.setDirect(new Point(0,1));
+				mve.setLength(Double.valueOf(vtext.getText()) * Math.PI);
+				earth.setV(mve);
+				vtext.setEnabled(false);
+				signal = !signal;
+				if(!signal) {
+					control.setText("start");
+				} else {
+					control.setText("stop");
+				}
+				new Thread(new PaintThread()).start();
+			}
+		});
+	}
+	
 	private void paintPlanet(Graphics g) {
-		g.translate(600, 340);
-		g.setColor(Color.RED);
 		int size = 12;
-		g.fillOval((int) sun.getVecPosX() * UNIT, (int) sun.getVecPosY() * UNIT, size, size);
-		g.drawString(sun.getName(), (int) sun.getVecPosX() * UNIT - 10, (int) sun.getVecPosY() * UNIT - 10);
-		
+		g.translate(600 , 340 );
+		//画地球的轨迹
+		g.setColor(Color.GREEN);
+		for(int i = 0; i < trace.size(); i++) {
+			Point p = trace.get(i);
+//			System.out.println("px: "+ p.getX() + "  py: " + p.getY());
+			g.fillOval((int) (p.getX() * UNIT), (int) (p.getY() * UNIT), 2, 2);
+		}
+		g.translate(- size / 2, - size / 2);
+		//画出太阳
+		g.setColor(Color.RED);
+		g.fillOval((int) (sun.getVecPosX() * UNIT), (int) (sun.getVecPosY() * UNIT), size, size);
+		g.drawString(sun.getName(), (int) (sun.getVecPosX() * UNIT) - 10, (int) (sun.getVecPosY() * UNIT) - 10);
+		//画出地球
 		g.setColor(Color.BLACK);
-		g.fillOval((int) earth.getVecPosX() * UNIT, (int) earth.getVecPosY() * UNIT, size, size);
-		g.drawString(earth.getName(), (int) earth.getVecPosX() * UNIT + 15, (int) earth.getVecPosY() * UNIT + 15);
+		g.fillOval((int) (earth.getVecPosX() * UNIT), (int) (earth.getVecPosY() * UNIT), size, size);
+		g.drawString(earth.getName(), (int) (earth.getVecPosX() * UNIT) + 15, (int) (earth.getVecPosY() * UNIT) + 15);
 	}
 	/**
 	 * 绘制图形
@@ -158,7 +220,7 @@ public class Example3 extends Example{
 		g.drawString("velocity of sun     = " + String.format("%.16f",sun.getV().getLength() / Math.PI) + " π AU/yr", 30, 45);
 		g.drawString("地球太阳的距离为：  " + r + " π AU/yr", 30, 60);
 		g.drawString("太阳的位置为 ", 30, 90);
-		g.drawString("	X：  " + String.format("%.8f",sun.getVecPosX()) + " AU  Y： " + String.format("%.8f",sun.getVecPosY()) + " AU", 30, 105);
+		g.drawString("	X：  " + String.format("%.10f",sun.getVecPosX()) + " AU  Y： " + String.format("%.10f",sun.getVecPosY()) + " AU", 30, 105);
 		g.drawString("地球的位置为", 30, 120);
 		g.drawString("	X：  " + String.format("%.8f",earth.getVecPosX()) + " AU  Y： " + String.format("%.8f",earth.getVecPosY()) + " AU", 30, 135);
 		
@@ -166,7 +228,7 @@ public class Example3 extends Example{
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Example3 e3 = new Example3();
+		Example3_1 e3 = new Example3_1();
 		e3.start();
 	}
 }
