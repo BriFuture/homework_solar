@@ -63,11 +63,11 @@
 地球的速度方向变化的很大，这个时候地球的运动就变成了螺旋状，导致轨迹的内环和外环之间相隔较远，经过足够长的时间最后看到的轨迹就成了一个（椭）圆环。
 如下面三幅图
 
-![example1.5.png](./imgs/example1.5.png)
+![example1.5.png](./imgs/example1.5.png "圆环")
 
-![example1.6.png](./imgs/example1.6.png)
+![example1.6.png](./imgs/example1.6.png "圆环")
 
-![example1.7.png](./imgs/example1.7.png)
+![example1.7.png](./imgs/example1.7.png "圆环")
   
 另外，通过设置地球的初速度为 1.3 AU / yr 时，
 
