@@ -172,13 +172,19 @@
 设置地球的速度为2π AU / yr，  time step = 0.002 yr，观察地球运动三圈的轨迹，发现地球始终在远离太阳作近圆周运动，如下图所示。
 
 * time step = 0.002 yr，
-<img src="./imgs/example4.1.png" width="600" alt="地球远离太阳作近似圆周的运动" align=center>地球远离太阳作近似圆周的运动
+
+<img src="./imgs/example4.1.png" width="600" alt="地球远离太阳作近似圆周的运动" align=center>
+地球远离太阳作近似圆周的运动
 
 * time step = 0.005 yr ，发现地球的轨迹相隔的距离减小。
-<img src="./imgs/example4.2.png" width="600" alt="圆环的间隔减小" align=center>圆环的间隔减小
+
+<img src="./imgs/example4.2.png" width="600" alt="圆环的间隔减小" align=center>
+圆环的间隔减小
 
 * timestep = 0.0001 yr，观察地球的运动和轨迹，与第一步使用 Euler-Cromer 方法得到的轨迹相近。
-<img src="./imgs/example4.3.png" width="600" alt="圆环之间几乎没有间隔" align=center>圆环之间几乎没有间隔
+
+<img src="./imgs/example4.3.png" width="600" alt="圆环之间几乎没有间隔" align=center>
+圆环之间几乎没有间隔
 
 这就说明，用万有引力计算加速度，推导地球的运动速度，**时间间隔不能设置过大，否则地球的位移变化和速度变化不准确，导致轨迹错误**。只有当时间间隔非常小（0.0001 yr = 131.4 s）时，轨迹的计算才比较精确，如果设置时间间隔为 1s 或者更小的话，轨道和地球的速度将会更加精确。
 
